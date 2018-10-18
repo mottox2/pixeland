@@ -1,5 +1,6 @@
 import React from 'react'
 import PixlaClient from 'pixela-node'
+import GraphForm from '../src/components/GraphForm'
 
 interface Props {}
 interface State {
@@ -22,10 +23,19 @@ class IndexPage extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
+    this.fetchGraphs()
+  }
+
+  fetchGraphs = async () => {
     const res = await this.client.getGraphs()
     this.setState({
       graphs: res.data.graphs
     })
+  }
+
+  createGraph = async graph => {
+    const res = await this.client.createGraph(graph)
+    this.fetchGraphs()
   }
 
   render() {
@@ -35,12 +45,14 @@ class IndexPage extends React.Component<Props, State> {
         <p>Welcome to next.js!</p>
         {graphs.map(graph => {
           return (
-            <div>
+            <div key={graph.id}>
               <p>{graph.name}</p>
               <img src={this.client.getGraphUrl(graph.id)} />
             </div>
           )
         })}
+        <p>グラフの追加</p>
+        <GraphForm onSubmit={this.createGraph} />
       </div>
     )
   }
