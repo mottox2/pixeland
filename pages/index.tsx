@@ -17,8 +17,8 @@ class IndexPage extends React.Component<Props, State> {
     super(props)
 
     this.client = new PixlaClient()
-    this.client.username = ''
-    this.client.token = ''
+    this.client.username = process.env.PIXELA_USERNAME
+    this.client.token = process.env.PIXELA_TOKEN
   }
 
   async componentDidMount() {
