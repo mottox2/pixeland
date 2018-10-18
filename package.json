@@ -5,12 +5,14 @@
   "author": "mottox2 <y.mottox2@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/styled-components": "^4.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "dotenv-webpack": "^1.5.7",
     "next": "^7.0.2",
     "pixela-node": "^0.0.4",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "styled-components": "^4.0.2"
   },
   "scripts": {
     "dev": "next",

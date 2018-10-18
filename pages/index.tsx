@@ -1,6 +1,7 @@
 import React from 'react'
 import PixlaClient from 'pixela-node'
 import GraphForm from '../src/components/GraphForm'
+import styled from 'styled-components'
 
 interface Props {}
 interface State {
@@ -55,19 +56,27 @@ class IndexPage extends React.Component<Props, State> {
     const { graphs } = this.state
     return (
       <div>
-        <p>Welcome to Pixeland</p>
+        <header>
+          <Logo src="/static/logo.svg" />
+        </header>
+
         {graphs.map(graph => {
           return (
-            <div key={graph.id}>
-              <p>
-                {graph.name}
-                <button onClick={() => this.deleteGraph(graph.id)}>x</button>
-              </p>
-              <img src={this.client.getGraphUrl(graph.id)} />
-              <br />
-              <button onClick={() => this.createPixel(graph.id)}>Commit!</button>
-              <button onClick={() => this.deletePixel(graph.id)}>Delete Commit!</button>
-            </div>
+            <Cell
+              style={{ backgroundImage: `url(${this.client.getGraphUrl(graph.id)}` }}
+              key={graph.id}
+            >
+              <CellBody>
+                <p>
+                  {graph.name}
+                  <button onClick={() => this.deleteGraph(graph.id)}>x</button>
+                </p>
+                {/* <img src={this.client.getGraphUrl(graph.id)} /> */}
+                <br />
+                <button onClick={() => this.createPixel(graph.id)}>Commit!</button>
+                <button onClick={() => this.deletePixel(graph.id)}>Delete Commit!</button>
+              </CellBody>
+            </Cell>
           )
         })}
         <p>グラフの追加</p>
@@ -76,5 +85,37 @@ class IndexPage extends React.Component<Props, State> {
     )
   }
 }
+
+const Cell = styled.div`
+  float: left;
+  width: calc(48% - 2px);
+  margin: 0 1%;
+  height: auto;
+  position: relative;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: 390vw;
+  background-position-x: 91.4%;
+  background-position-y: 37%;
+  border: 1px solid #eee;
+  &:after {
+    content: ' ';
+    position: relative;
+    display: block;
+    padding-bottom: 100%;
+  }
+`
+
+const CellBody = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+`
+
+const Logo = styled.img`
+  padding: 4px;
+`
 
 export default IndexPage
