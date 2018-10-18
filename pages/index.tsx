@@ -38,16 +38,35 @@ class IndexPage extends React.Component<Props, State> {
     this.fetchGraphs()
   }
 
+  deleteGraph = async graphId => {
+    await this.client.deleteGraph(graphId)
+    this.fetchGraphs()
+  }
+
+  createPixel = async graphId => {
+    await this.client.incrementPixel(graphId)
+  }
+
+  deletePixel = async graphId => {
+    await this.client.decrementPixel(graphId)
+  }
+
   render() {
     const { graphs } = this.state
     return (
       <div>
-        <p>Welcome to next.js!</p>
+        <p>Welcome to Pixeland</p>
         {graphs.map(graph => {
           return (
             <div key={graph.id}>
-              <p>{graph.name}</p>
+              <p>
+                {graph.name}
+                <button onClick={() => this.deleteGraph(graph.id)}>x</button>
+              </p>
               <img src={this.client.getGraphUrl(graph.id)} />
+              <br />
+              <button onClick={() => this.createPixel(graph.id)}>Commit!</button>
+              <button onClick={() => this.deletePixel(graph.id)}>Delete Commit!</button>
             </div>
           )
         })}
